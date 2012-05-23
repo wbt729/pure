@@ -81,11 +81,11 @@ void MeanPlot::wheelEvent(QWheelEvent *event) {
 	scale = (scale < 1) ? 1 : scale;
 }
 
-void MeanPlot::mousePressEvent(QMouseEvent *event) {
-	if(event->button() == Qt::RightButton)
-		autoScale = !autoScale;
-	if(autoScale)
-		setAxisAutoScale(QwtPlot::yLeft, true);
-	else
-		setAxisAutoScale(QwtPlot::yLeft, false);
-}
+//void MeanPlot::mousePressEvent(QMouseEvent *event) {
+//	if(event->button() == Qt::RightButton)
+//		autoScale = !autoScale;
+//	if(autoScale)
+//		setAxisAutoScale(QwtPlot::yLeft, true);
+//	else
+//		setAxisAutoScale(QwtPlot::yLeft, false);
+//}

@@ -1,10 +1,10 @@
 #ifndef PLOT_H_
 #define PLOT_H_
 
-#include <qwt/qwt_plot.h>
-#include <qwt/qwt_plot_curve.h>
-#include <qwt/qwt_plot_directpainter.h>
-#include <qwt/qwt_scale_engine.h>
+#include <qwt_plot.h>
+#include <qwt_plot_curve.h>
+#include <qwt_plot_directpainter.h>
+#include <qwt_scale_engine.h>
 #include <QTimer>
 #include <QWheelEvent>
 
@@ -29,7 +29,7 @@ class MeanPlot : public QwtPlot {
 		void input(double, double, double);
 	protected:
 		virtual void mouseDoubleClickEvent(QMouseEvent *);
-		virtual void mousePressEvent(QMouseEvent *);
+		//virtual void mousePressEvent(QMouseEvent *);
 		virtual void wheelEvent(QWheelEvent *);
 };
 
