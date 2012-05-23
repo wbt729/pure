@@ -15,11 +15,20 @@ FFTWidget::FFTWidget(int f, int sz, int i, QObject *parent) {
 }
 
 void FFTWidget::init() {
+	setTitle("FFT");
 	hrBpm = 0;
 	hrMarker = new QwtPlotMarker();
 	hrMarker->setLineStyle(QwtPlotMarker::VLine);
 	hrMarker->setLinePen(QPen(QColor(255,255,255,100), 2, Qt::SolidLine));
-	//hrMarker->setSymbol(QwtSymbol::Circle);
+
+	QPen pen;
+	pen.setWidth(2);
+	pen.setColor(Qt::blue);
+	QwtSymbol *symb = new QwtSymbol(QwtSymbol::Diamond);
+	symb->setPen(pen);
+	symb->setSize(10);
+
+	hrMarker->setSymbol(symb);
 	hrMarker->attach(this);
 	hrMarker->setVisible(false);
 	setAxisAutoScale(QwtPlot::yLeft, true);
@@ -39,8 +48,6 @@ void FFTWidget::init() {
 		hamming.replace(i, tmp);
 	}
 
-	QPen pen;
-	pen.setWidth(2);
 	pen.setColor(Qt::red);
 
 	curve = new QwtPlotCurve();
@@ -66,6 +73,7 @@ void FFTWidget::addSamples(double red, double green, double blue) {
 }
 
 void FFTWidget::doFft() {
+	qDebug() << "FFTWidget: do FFT";
 	//input filter, removes movement artifacts as far as possible
 	for(int i=0; i<dataIn.size(); i++) {
 		if(dataIn.at(i) > 2 || dataIn.at(i) < -2) {
@@ -76,19 +84,37 @@ void FFTWidget::doFft() {
 		}
 	}
 
+
+	fftw_execute(p);	//apply fft
+		
+	//add old and new fft in a weighted sum
 	double weightOld = 0.9;
 	double weightNew = 1 - weightOld;
-	qDebug() << "FFTWidget: do FFT";
-	fftw_execute(p);	//apply fft
-	//add old and new fft in a weighted sum
+
 	for(int i=0; i<size; i++) {
 			double buf = dY.at(i)*weightOld + abs(dYBuf.at(i)*weightNew);
 			dY.replace(i, buf);
 	}
+
 	doHrDetection();
 	curve->setRawSamples(dX.data(), dY.data(), size/2);
-	replot();
-	updateAxes();
+
+	//scale the y-axis of the plot according to the
+	//highest value and limit the display to a minimum
+	//axis height, so that we don't look at inflated noise
+	double scaleMinYValue = 5;
+	//get max value for scaling
+	double max = 0;
+	for(int i=0; i<dY.size()/2; i++) {
+		if(dY.at(i) > max)
+			max = dY.at(i);
+	}
+	//set scale
+	if(max < scaleMinYValue)
+		setAxisScale(QwtPlot::yLeft, 0, scaleMinYValue);
+	else
+		setAxisScale(QwtPlot::yLeft, 0, max);
+	replot();	
 }
 
 //detect largest peak in physiologically relevant

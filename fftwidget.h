@@ -7,6 +7,7 @@
 #define FFTWIDGET_H_
 
 #if defined _WIN64 || defined _WIN32
+#include <qwt_symbol.h>
 #include <qwt_plot.h>
 #include <qwt_plot_marker.h>
 #include <qwt_plot_curve.h>
