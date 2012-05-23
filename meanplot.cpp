@@ -1,6 +1,7 @@
 #include "meanplot.h"
 
 MeanPlot::MeanPlot(QObject *parent) {
+	setTitle("Avg. Brightness");
 	scale = 1;
 	floating = false;
 	autoScale = false;
