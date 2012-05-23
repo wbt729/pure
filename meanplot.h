@@ -40,7 +40,7 @@ class MeanPlot : public QwtPlot {
 	public slots:
 		void input(double, double, double);
 	protected:
-		virtual void mouseDoubleClickEvent(QMouseEvent *);
+		//virtual void mouseDoubleClickEvent(QMouseEvent *);
 		//virtual void mousePressEvent(QMouseEvent *);
 		virtual void wheelEvent(QWheelEvent *);
 };

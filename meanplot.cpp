@@ -62,19 +62,19 @@ void MeanPlot::input(double meanRed, double meanGreen, double meanBlue) {
 	dG.erase(dG.begin());
 	dG.append(meanGreen);
 
-	if(!autoScale) {
-		if(floating)
-			setAxisScale(QwtPlot::yLeft, meanGreen-scale, meanGreen+scale);
-		else
+	//if(!autoScale) {
+		//if(floating)
+		//	setAxisScale(QwtPlot::yLeft, meanGreen-scale, meanGreen+scale);
+		//else
 			setAxisScale(QwtPlot::yLeft, -scale, +scale);
-	}
-	else
-		updateAxes();
+	//}
+	//else
+		//updateAxes();
 }
 
-void MeanPlot::mouseDoubleClickEvent(QMouseEvent *event) {
-	floating = !floating;
-}
+//void MeanPlot::mouseDoubleClickEvent(QMouseEvent *event) {
+//	floating = !floating;
+//}
 
 //zoom by mousewheel
 void MeanPlot::wheelEvent(QWheelEvent *event) {
