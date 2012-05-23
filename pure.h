@@ -9,6 +9,7 @@
 #include "imageprocessor.h"
 #include "signalprocessor.h"
 #include "fftwidget.h"
+#include "recorderwidget.h"
 
 Q_DECLARE_METATYPE(cv::Rect)
 Q_DECLARE_METATYPE(cv::Mat)
@@ -27,8 +28,10 @@ private:
     QThread *imgProcThread;
     QThread *sigProcThread;
     QThread *fftWidgetThread;
+	QThread *recorderThread;
     ImageProcessor *imgProc;
     SignalProcessor *sigProc;
+	RecorderWidget *recorder;
 private slots:
 	void onNewSamples(double, double, double);
 protected:

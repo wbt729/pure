@@ -8,25 +8,30 @@ pure::pure(QWidget *parent) : QMainWindow(parent) {
 	grabber = new Grabber();
 	sigProc = new SignalProcessor();
 	imgProc = new ImageProcessor(1);
+	recorder = new RecorderWidget();
 
 	grabberThread = new QThread();
 	imgProcThread = new QThread();
 	sigProcThread = new QThread();
 	fftWidgetThread = new QThread();
+	recorderThread = new QThread();
 
 	ui.fftWidget->moveToThread(fftWidgetThread);
 	grabber->moveToThread(sigProcThread);
 	imgProc->moveToThread(imgProcThread);
 	sigProc->moveToThread(grabberThread);
+	recorder->moveToThread(recorderThread);
 	grabberThread->start();
 	imgProcThread->start();
 	sigProcThread->start();
 	fftWidgetThread->start();
+	recorderThread->start();
 
 	connect(grabber, SIGNAL(output(cv::Mat)), ui.display, SLOT(setFrame(cv::Mat)));
 
 	connect(grabber, SIGNAL(output(cv::Mat)), imgProc, SLOT(input(cv::Mat)));
 	connect(imgProc, SIGNAL(output(double, double, double)), sigProc, SLOT(input(double, double, double)));
+	connect(imgProc, SIGNAL(output(double, double, double)), recorder, SLOT(input(double, double, double)));
 	connect(sigProc, SIGNAL(output(double, double, double)), ui.meanPlot, SLOT(input(double, double, double)));
 
 	connect(imgProc, SIGNAL(newRoi(cv::Rect)), ui.display, SLOT(setRoi(cv::Rect)));
