@@ -15,10 +15,10 @@ MeanPlot::MeanPlot(QObject *parent) {
 	dB = QVector<double>(size, 0);
 	//setAutoReplot(true);
 	setAxisAutoScale(QwtPlot::yLeft);
-	QwtLinearScaleEngine *scaleEngine = new QwtLinearScaleEngine();
-	scaleEngine->setReference(5);
-	scaleEngine->setAttribute(QwtScaleEngine::Symmetric);
-	setAxisScaleEngine(QwtPlot::yLeft, scaleEngine);
+	//QwtLinearScaleEngine *scaleEngine = new QwtLinearScaleEngine();
+	//scaleEngine->setReference(5);
+	//scaleEngine->setAttribute(QwtScaleEngine::Symmetric);
+	//setAxisScaleEngine(QwtPlot::yLeft, scaleEngine);
 
 	setAutoReplot(true);
 	QPen pen;
@@ -50,6 +50,7 @@ MeanPlot::MeanPlot(QObject *parent) {
 MeanPlot::~MeanPlot() {
 }
 
+
 void MeanPlot::input(double meanRed, double meanGreen, double meanBlue) {
 	qDebug() << "MeanPlot: update Data";
 	dR.erase(dR.begin());
@@ -75,7 +76,7 @@ void MeanPlot::mouseDoubleClickEvent(QMouseEvent *event) {
 	floating = !floating;
 }
 
-//zoom
+//zoom by mousewheel
 void MeanPlot::wheelEvent(QWheelEvent *event) {
 	int numDegrees = event->delta()/8;
 	scale -= numDegrees/8;

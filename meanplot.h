@@ -34,7 +34,7 @@ class MeanPlot : public QwtPlot {
 		QwtPlotCurve *curveBlue;
 
 		QVector<double> dX, dR, dG, dB;
-		QwtLinearScaleEngine *scaleEngine;
+		//QwtLinearScaleEngine *scaleEngine;
 		int scale;
 
 	public slots:
