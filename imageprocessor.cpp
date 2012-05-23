@@ -48,12 +48,13 @@ void ImageProcessor::input(cv::Mat img) {
 void ImageProcessor::extractSamples() {
 	getMeanValues();
 
-	if(std::isnan(red))
-			red = 0;
-	if(std::isnan(green))
-		green = 0;
-	if(std::isnan(blue))
-		blue = 0;
+	//isnan is not defined under windows
+	//if(std::isNaN(red))
+	//		red = 0;
+	//if(std::isnan(green))
+	//	green = 0;
+	//if(std::isnan(blue))
+	//	blue = 0;
 
 	qDebug() << "ImageProcessor: output rgb " << red << green << blue;
 	emit output(red, green, blue);
@@ -77,6 +78,8 @@ void ImageProcessor::getMeanValues() {
 		red += subImg.data[3*i+2];
 	}
 	int area = subImg.rows*subImg.cols;
+	if(area == 0)
+		area = 1;
 	//qDebug() << "ImageProcessor: red" << red << "area" << area;
 	red = red/area;
 	green = green/area;
