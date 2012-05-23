@@ -6,11 +6,22 @@
 #ifndef FFTWIDGET_H_
 #define FFTWIDGET_H_
 
+#if defined _WIN64 || defined _WIN32
 #include <qwt_plot.h>
 #include <qwt_plot_marker.h>
 #include <qwt_plot_curve.h>
 #include <qwt_plot_directpainter.h>
 #include <qwt_scale_engine.h>
+#endif
+
+#if defined __linux__
+#include <qwt/qwt_plot.h>
+#include <qwt/qwt_plot_marker.h>
+#include <qwt/qwt_plot_curve.h>
+#include <qwt/qwt_plot_directpainter.h>
+#include <qwt/qwt_scale_engine.h>
+#endif
+
 #include <QTimer>
 #include <QVector>
 #include <fftw3.h>
