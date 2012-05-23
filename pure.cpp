@@ -28,17 +28,18 @@ pure::pure(QWidget *parent) : QMainWindow(parent) {
 	recorderThread->start();
 
 	connect(grabber, SIGNAL(output(cv::Mat)), ui.display, SLOT(setFrame(cv::Mat)));
-
 	connect(grabber, SIGNAL(output(cv::Mat)), imgProc, SLOT(input(cv::Mat)));
+
 	connect(imgProc, SIGNAL(output(double, double, double)), sigProc, SLOT(input(double, double, double)));
 	connect(imgProc, SIGNAL(output(double, double, double)), recorder, SLOT(input(double, double, double)));
-	connect(sigProc, SIGNAL(output(double, double, double)), ui.meanPlot, SLOT(input(double, double, double)));
-
 	connect(imgProc, SIGNAL(newRoi(cv::Rect)), ui.display, SLOT(setRoi(cv::Rect)));
-
-	connect(sigProc, SIGNAL(output(double, double, double)), ui.fftWidget, SLOT(addSamples(double, double, double)));
-	connect(ui.fftWidget, SIGNAL(newHrEstimation(QString)), ui.labelHr, SLOT(setText(const QString &)));
 	connect(imgProc, SIGNAL(output(double, double, double)), this, SLOT(onNewSamples(double, double, double)));
+
+	connect(sigProc, SIGNAL(output(double, double, double)), ui.meanPlot, SLOT(input(double, double, double)));
+	connect(sigProc, SIGNAL(output(double, double, double)), ui.fftWidget, SLOT(addSamples(double, double, double)));
+	
+	connect(ui.fftWidget, SIGNAL(newHrEstimation(QString)), ui.labelHr, SLOT(setText(const QString &)));
+	
 
 	if(grabber->init(15,0) == 0)
 		grabber->start();
@@ -48,9 +49,9 @@ pure::~pure() {
 }
 
 void pure::onNewSamples(double red, double green, double blue) {
-	ui.labelMean->setText(tr("%1").arg(qFloor(red+green+blue)/3));
+	ui.labelMean->setText(tr("%1").arg(qFloor(red+green+blue)/3));	//display avg brightness of ROI
 }
 
 void pure::closeEvent(QCloseEvent *e) {
-	delete grabber;		//release camera
+	grabber->exit();	//release camera
 }

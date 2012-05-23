@@ -28,12 +28,14 @@ private:
 	int running;
 	QTimer *timer;
 	QTime *fpsTime;
-	void exit();
+	
 public:
 	int init(double fS=15, int camNumber=0);
+	void exit();
 public slots:
 	void start();
 	void stop();
+
 private slots:
 	void grabFrame();
 signals:

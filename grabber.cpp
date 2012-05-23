@@ -14,6 +14,8 @@ Grabber::~Grabber() {
 	exit();
 }
 
+
+//set parameters and open camera
 int Grabber::init(double fS, int camNumber) {
 	qDebug() << "Grabber: init";
 	fpsTime = new QTime();
@@ -29,6 +31,7 @@ int Grabber::init(double fS, int camNumber) {
     }
 }
 
+//start recording
 void Grabber::start() {
 	qDebug() << "Grabber: start";
 	fpsTime->start();
@@ -54,6 +57,7 @@ void Grabber::stop() {
 	timer->stop();
 }
 
+//release camera when exiting
 void Grabber::exit() {
 	qDebug() << "Grabber: exit";
 	if(cap.isOpened())
