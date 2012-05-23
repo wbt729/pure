@@ -45,3 +45,7 @@ pure::~pure() {
 void pure::onNewSamples(double red, double green, double blue) {
 	ui.labelMean->setText(tr("%1").arg(qFloor(red+green+blue)/3));
 }
+
+void pure::closeEvent(QCloseEvent *e) {
+	delete grabber;		//release camera
+}

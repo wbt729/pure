@@ -31,6 +31,8 @@ private:
     SignalProcessor *sigProc;
 private slots:
 	void onNewSamples(double, double, double);
+protected:
+	virtual void closeEvent(QCloseEvent *);
 };
 
 #endif // PURE_H
