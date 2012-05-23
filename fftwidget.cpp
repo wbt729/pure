@@ -68,7 +68,7 @@ void FFTWidget::addSamples(double red, double green, double blue) {
 void FFTWidget::doFft() {
 	//input filter, removes movement artifacts as far as possible
 	for(int i=0; i<dataIn.size(); i++) {
-		if(dataIn.at(i) > 1 || dataIn.at(i) < -1) {
+		if(dataIn.at(i) > 2 || dataIn.at(i) < -2) {
 			for(int j=-20; j<20; j++) {
 				if(i+j >=0 && i+j < dataIn.size())
 					dataIn.replace(i+j, 0);
