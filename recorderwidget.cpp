@@ -2,7 +2,7 @@
 
 RecorderWidget::RecorderWidget(QWidget *parent) : QWidget(parent) {
 	ui.setupUi(this);
-	file.setFileName("bla.txt");
+	file.setFileName("record.txt");
 	file.open(QIODevice::WriteOnly | QIODevice::Text);	
 }
 
