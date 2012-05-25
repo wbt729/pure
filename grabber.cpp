@@ -19,7 +19,7 @@ Grabber::~Grabber() {
 int Grabber::init(double fS, int camNumber) {
 	qDebug() << "Grabber: init";
 	fpsTime = new QTime();
-	samplingInterval = 1000/fS;
+	samplingInterval = 1000/fS; //interval between two images in ms
     cap.open(camNumber); // open the camera
     if(!cap.isOpened()) { // check if we succeeded
     	qDebug() << "Grabber: cant open camera number" << camNumber;
@@ -34,7 +34,7 @@ int Grabber::init(double fS, int camNumber) {
 //start recording
 void Grabber::start() {
 	qDebug() << "Grabber: start";
-	fpsTime->start();
+	fpsTime->start(); //this is used to determine the "real" time between two images
 	timer->start(samplingInterval);
 }
 
@@ -45,6 +45,8 @@ void Grabber::grabFrame() {
 		int elapsed = fpsTime->elapsed();
 		qDebug() << "Grabber: time elapsed" << elapsed << "fps:" << (double) 1000/elapsed;
 		fpsTime->restart();
+		//downsampling at this point makes the program
+		//run consideralby quicker
 		//cv::resize(frame, frame, cv::Size(), 0.25, 0.25);
 		emit output(frame);
 	}

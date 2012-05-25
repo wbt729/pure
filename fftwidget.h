@@ -21,6 +21,7 @@
 #include <qwt/qwt_plot_curve.h>
 #include <qwt/qwt_plot_directpainter.h>
 #include <qwt/qwt_scale_engine.h>
+#include <qwt/qwt_symbol.h>
 #endif
 
 #include <QTimer>

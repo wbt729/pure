@@ -1,9 +1,10 @@
-/*
- * grabber.h
- *
- *  Created on: May 16, 2012
- *      Author: wbt729
- */
+//The grabber gets images from the camera. In order to use it
+//the init() function has to be called first. It will return whether
+//or not a camera could be opened.
+//You can specify the sampling frequency and the camera, if you
+//have more than one camera connected to your system.
+
+//images are sent through Qts signal and slot mechanism
 
 #ifndef GRABBER_H_
 #define GRABBER_H_
@@ -21,7 +22,7 @@ public:
 	Grabber(double fS, int camNumber);
 	virtual ~Grabber();
 private:
-	double samplingInterval; //in Hertz
+	double samplingInterval; //in ms
 	cv::Mat frame;
 	cv::VideoCapture cap;
 	int frameCounter;

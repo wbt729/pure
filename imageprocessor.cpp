@@ -24,6 +24,7 @@ ImageProcessor::ImageProcessor(int mode) {
 }
 
 ImageProcessor::~ImageProcessor() {
+	tracker->stop();
 }
 
 void ImageProcessor::input(cv::Mat img) {
@@ -48,7 +49,7 @@ void ImageProcessor::input(cv::Mat img) {
 void ImageProcessor::extractSamples() {
 	getMeanValues();
 
-	//isnan is not defined under windows
+	//isnan is not defined in windows
 	//if(std::isNaN(red))
 	//		red = 0;
 	//if(std::isnan(green))
@@ -66,6 +67,7 @@ void ImageProcessor::setTracking(bool s) {
 }
 
 void ImageProcessor::getMeanValues() {
+	//to determine the mean value of the ROI a new
 	red = 0; green = 0; blue = 0;
 	qDebug() << "ImageProcessor: get mean values using ROI" << roi.x << roi.y << roi.width << roi.height;
 	cv::Mat subImg = cv::Mat(image, roi);	//new matrix from ROI

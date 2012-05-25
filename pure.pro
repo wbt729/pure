@@ -2,7 +2,8 @@ TEMPLATE = app
 TARGET = pure
 QT += core \
     gui
-HEADERS += imagelabel.h \
+HEADERS += recorderwidget.h \
+    imagelabel.h \
     meanplot.h \
     fftwidget.h \
     signalprocessor.h \
@@ -10,7 +11,8 @@ HEADERS += imagelabel.h \
     imageprocessor.h \
     grabber.h \
     pure.h
-SOURCES += imagelabel.cpp \
+SOURCES += recorderwidget.cpp \
+    imagelabel.cpp \
     meanplot.cpp \
     fftwidget.cpp \
     signalprocessor.cpp \
@@ -19,7 +21,8 @@ SOURCES += imagelabel.cpp \
     grabber.cpp \
     main.cpp \
     pure.cpp
-FORMS += pure.ui
+FORMS += recorderwidget.ui \
+    pure.ui
 RESOURCES += 
 LIBS += /usr/lib/libopencv_core.so \
     /usr/lib/libopencv_highgui.so \
