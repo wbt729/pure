@@ -48,6 +48,7 @@ MeanPlot::MeanPlot(QObject *parent) {
 }
 
 MeanPlot::~MeanPlot() {
+	qDebug() << "MeanPlot: destructor";
 }
 
 

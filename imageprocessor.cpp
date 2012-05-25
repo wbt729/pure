@@ -1,10 +1,3 @@
-/*
- * imageprocessor.cpp
- *
- *  Created on: May 16, 2012
- *      Author: wbt729
- */
-
 #include "imageprocessor.h"
 
 ImageProcessor::ImageProcessor(int mode) {
@@ -14,7 +7,7 @@ ImageProcessor::ImageProcessor(int mode) {
 	QThread *trackerThread = new QThread();
 	trackerThread->start();
 	tracker->start();
-	tracker->moveToThread(trackerThread);
+	tracker->moveToThread(trackerThread);	
 
 	connect(this, SIGNAL(newFrame(cv::Mat)), tracker, SLOT(input(cv::Mat)));
 	connect(tracker, SIGNAL(output(cv::Rect)), this, SLOT(setCvRectRoi(cv::Rect)));
@@ -24,7 +17,10 @@ ImageProcessor::ImageProcessor(int mode) {
 }
 
 ImageProcessor::~ImageProcessor() {
+	qDebug() << "ImageProcessor: destructor";
 	tracker->stop();
+	trackerThread->quit();
+	trackerThread->wait();
 }
 
 void ImageProcessor::input(cv::Mat img) {
@@ -33,7 +29,6 @@ void ImageProcessor::input(cv::Mat img) {
 		busy = true;
 		image = img.clone();
 		if(roiMode == 1) {
-			//tracker->input(&image);
 			emit newFrame(image);
 		}
 		else {
@@ -80,17 +75,14 @@ void ImageProcessor::getMeanValues() {
 		red += subImg.data[3*i+2];
 	}
 	int area = subImg.rows*subImg.cols;
-	if(area == 0)
+	if(area == 0)	//prevent zero division if no ROI is set
 		area = 1;
-	//qDebug() << "ImageProcessor: red" << red << "area" << area;
 	red = red/area;
 	green = green/area;
 	blue = blue/area;
 }
 
 void ImageProcessor::setCvRectRoi(cv::Rect rect) {
-//	if(busy)
-//		return;
 	qDebug() << "ImageProcessor: set ROI from cv::Rect";
 	roi = rect;
 	emit newRoi(roi);

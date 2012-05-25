@@ -7,7 +7,7 @@ pure::pure(QWidget *parent) : QMainWindow(parent) {
 	qRegisterMetaType<cv::Mat>("cv::Mat");
 
 	ui.setupUi(this);
-	setAttribute(Qt::WA_DeleteOnClose);
+	//setAttribute(Qt::WA_DeleteOnClose);
 
 	grabber = new Grabber();
 	sigProc = new SignalProcessor();
@@ -19,13 +19,11 @@ pure::pure(QWidget *parent) : QMainWindow(parent) {
 	//by moving a QObject to the thread. once the thread is started
 	//the QObject behaves as it normally would but runs inside the
 	//thread.
-	grabberThread = new QThread();
-	imgProcThread = new QThread();
-	sigProcThread = new QThread();
-	fftWidgetThread = new QThread();
-	recorderThread = new QThread();
+	grabberThread = new QThread(this);
+	imgProcThread = new QThread(this);
+	sigProcThread = new QThread(this);
+	recorderThread = new QThread(this);
 
-	ui.fftWidget->moveToThread(fftWidgetThread);
 	grabber->moveToThread(sigProcThread);
 	imgProc->moveToThread(imgProcThread);
 	sigProc->moveToThread(grabberThread);
@@ -34,7 +32,6 @@ pure::pure(QWidget *parent) : QMainWindow(parent) {
 	grabberThread->start();
 	imgProcThread->start();
 	sigProcThread->start();
-	fftWidgetThread->start();
 	recorderThread->start();
 
 	//the connections of the singal and slot system. when you connect two QObjects
@@ -70,6 +67,7 @@ pure::pure(QWidget *parent) : QMainWindow(parent) {
 }
 
 pure::~pure() {
+	qDebug() << "Pure: destructor";
 }
 
 void pure::onNewSamples(double red, double green, double blue) {
@@ -77,8 +75,21 @@ void pure::onNewSamples(double red, double green, double blue) {
 }
 
 //release camera or the grabber thread will not
-//stop when the mainwindow is closed. that means
+//stop when the mainwindow is closed. meaning
 //the program will never stop
 void pure::closeEvent(QCloseEvent *e) {
 	grabber->exit();
+	//grabber->blockSignals(true);
+	//imgProc->blockSignals(true);
+	//sigProc->blockSignals(true);
+	//QApplication::processEvents();
+	//grabberThread->quit();
+	//grabberThread->wait();
+	//imgProcThread->quit();
+	//imgProcThread->wait();
+	//sigProcThread->quit();
+	//sigProcThread->wait();
+	//recorderThread->quit();
+	//recorderThread->wait();
+	//delete recorder;
 }

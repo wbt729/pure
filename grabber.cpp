@@ -10,6 +10,7 @@ Grabber::Grabber() {
 }
 
 Grabber::~Grabber() {
+	qDebug() << "Grabber: destructor";
 	stop();
 	exit();
 }
@@ -44,6 +45,10 @@ void Grabber::grabFrame() {
 	if(cap.read(frame)) {
 		int elapsed = fpsTime->elapsed();
 		qDebug() << "Grabber: time elapsed" << elapsed << "fps:" << (double) 1000/elapsed;
+		//qDebug() << "Grabber: fps" << cap.get(CV_CAP_PROP_FPS);
+		//qDebug() << "Grabber: brightness" << cap.get(CV_CAP_PROP_BRIGHTNESS);
+		//qDebug() << "Grabber: gain" << cap.get(CV_CAP_PROP_GAIN);
+		//qDebug() << "Grabber: exposure" << cap.get(CV_CAP_PROP_EXPOSURE);
 		fpsTime->restart();
 		//downsampling at this point makes the program
 		//run consideralby quicker
@@ -62,6 +67,7 @@ void Grabber::stop() {
 //release camera when exiting
 void Grabber::exit() {
 	qDebug() << "Grabber: exit";
+	timer->stop();
 	if(cap.isOpened())
 		cap.release();
 }

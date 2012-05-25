@@ -1,10 +1,3 @@
-/*
- * SignalProcessor.h
- *
- *  Created on: May 16, 2012
- *      Author: wbt729
- */
-
 #ifndef SIGNALPROCESSOR_H_
 #define SIGNALPROCESSOR_H_
 

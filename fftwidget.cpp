@@ -58,7 +58,7 @@ void FFTWidget::init() {
 }
 
 FFTWidget::~FFTWidget() {
-	// TODO Auto-generated destructor stub
+	qDebug() << "FFTWidget: destructor";
 }
 
 void FFTWidget::addSamples(double red, double green, double blue) {

@@ -1,10 +1,3 @@
-/*
- * tracker.cpp
- *
- *  Created on: May 17, 2012
- *      Author: wbt729
- */
-
 #include "tracker.h"
 
 Tracker::Tracker() {
@@ -20,6 +13,7 @@ Tracker::Tracker() {
 }
 
 Tracker::~Tracker() {
+	qDebug() << "Tracker: destructor";
 }
 
 void Tracker::start() {

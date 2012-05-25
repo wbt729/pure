@@ -37,7 +37,6 @@ private:
 	QThread *grabberThread,
 			*imgProcThread,
 			*sigProcThread,
-			*fftWidgetThread,
 			*recorderThread;
 
 private slots:

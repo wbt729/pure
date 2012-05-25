@@ -1,10 +1,3 @@
-/*
- * ImageLabel.cpp
- *
- *  Created on: May 16, 2012
- *      Author: wbt729
- */
-
 #include "imagelabel.h"
 
 ImageLabel::ImageLabel(QObject *parent) {
@@ -13,11 +6,13 @@ ImageLabel::ImageLabel(QObject *parent) {
 }
 
 ImageLabel::~ImageLabel() {
+	qDebug() << "ImageLabel: destructor";
 }
 
 //set a new frame and draw it
 void ImageLabel::setFrame(cv::Mat frame) {
-	qDebug() << "ImageImageLabel: new Frame";
+	qDebug() << "ImageLabel: new Frame";
+	frame = frame.clone();
 	QImage image = QImage((uchar*) frame.data, frame.cols, frame.rows, QImage::Format_RGB888).rgbSwapped();
 	pixmap = QPixmap::fromImage(image);
 	QPainter painter(&pixmap);
@@ -31,9 +26,10 @@ void ImageLabel::setFrame(cv::Mat frame) {
 }
 
 void ImageLabel::setRoi(cv::Rect newRoi) {
-	qDebug() << "ImageImageLabel: set ROI";
+	qDebug() << "ImageLabel: set ROI";
 	roi.setX(newRoi.x);
 	roi.setY(newRoi.y);
 	roi.setWidth(newRoi.width);
 	roi.setHeight(newRoi.height);
+	qDebug() << "ImageLabel: set ROI done";
 }

@@ -23,6 +23,7 @@ public slots:
 	void setCvRectRoi(cv::Rect);
 
 private:
+	QThread *trackerThread;
 	void setTracking(bool);
 	void extractSamples();
 	void updateRoi();
